@@ -79,6 +79,27 @@ public class ReservationTest {
     }
     
     /**
+     * Customer requests to reserve one truck for one time frame. There is vehicle available in inventory.
+     * @result Reservation succeeded with a reservation.
+     */
+    
+    @Test
+    public void testReserveTruck() {
+        VehicleType carTypeSedan = VehicleType.TRUCK;
+        Customer customer = new Customer("FirstName", "LastName");
+        Map<LocalDateTime, Integer> timeFramesMap = new HashMap<>();
+        LocalDateTime startDateTime = LocalDateTime.of(2018, 12, 28, 10, 20, 00);
+        int numOfDays = 6;
+        timeFramesMap.put(startDateTime, numOfDays);
+        
+        String expected = "C";
+
+        Reservation reservation;
+        reservation = Reservation.reserve(customer, carTypeSedan, timeFramesMap);
+        assertEquals(expected, reservation.getVehicle().getPlateNumber());
+    }
+
+    /**
      * Customer requests to reserve one vehicle for one time frame. That type of vehicles are all booked for that time frame. 
      * No vehicle available
      * @result Reservation failed with null reservation.
